@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Правила сервера | Minecraft</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --turquoise: #40E0D0;
+    --turquoise-dark: #1a9e94;
+    --turquoise-deep: #0d5c56;
+    --bg-dark: #0a1414;
+    --bg-card: #10201f;
+    --text: #e6f7f5;
+    --text-dim: #8fb8b4;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Фоновые свечения */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(64, 224, 208, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(26, 158, 148, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Хедер */
+  header {
+    text-align: center;
+    margin-bottom: 70px;
+    animation: fadeDown 0.8s ease;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    background: rgba(64, 224, 208, 0.08);
+    border: 1px solid rgba(64, 224, 208, 0.3);
+    border-radius: 100px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--turquoise);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .logo-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--turquoise);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--turquoise);
+    animation: pulse 2s infinite;
+  }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #ffffff 0%, var(--turquoise) 50%, var(--turquoise-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 18px;
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Карточки правил */
+  .rules {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .rule {
+    background: linear-gradient(145deg, rgba(16, 32, 31, 0.9), rgba(10, 20, 20, 0.9));
+    border: 1px solid rgba(64, 224, 208, 0.15);
+    border-radius: 20px;
+    padding: 28px 30px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease backwards;
+  }
+
+  .rule::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, var(--turquoise), var(--turquoise-deep));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .rule:hover {
+    transform: translateX(8px);
+    border-color: rgba(64, 224, 208, 0.5);
+    box-shadow: 0 10px 40px -10px rgba(64, 224, 208, 0.3);
+  }
+
+  .rule:hover::before {
+    opacity: 1;
+  }
+
+  .rule-number {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--turquoise);
+    min-width: 55px;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(64, 224, 208, 0.4);
+  }
+
+  .rule-content h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+
+  .rule-content p {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .rule-content p strong {
+    color: var(--turquoise);
+    font-weight: 600;
+  }
+
+  /* Категории */
+  .category {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--turquoise);
+    margin: 50px 0 20px;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 600;
+  }
+
+  .category::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(64, 224, 208, 0.4), transparent);
+  }
+
+  .category:first-of-type {
+    margin-top: 0;
+  }
+
+  /* Футер */
+  footer {
+    text-align: center;
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(64, 224, 208, 0.15);
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  footer .warn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 22px;
+    background: rgba(64, 224, 208, 0.08);
+    border: 1px solid rgba(64, 224, 208, 0.25);
+    border-radius: 100px;
+    color: var(--turquoise);
+    font-weight: 500;
+  }
+
+  /* Анимации */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .rule:nth-child(1) { animation-delay: 0.05s; }
+  .rule:nth-child(2) { animation-delay: 0.1s; }
+  .rule:nth-child(3) { animation-delay: 0.15s; }
+  .rule:nth-child(4) { animation-delay: 0.2s; }
+  .rule:nth-child(5) { animation-delay: 0.25s; }
+
+  @media (max-width: 600px) {
+    .wrapper { padding: 40px 16px 60px; }
+    .rule { padding: 22px 20px; gap: 16px; border-radius: 16px; }
+    .rule-number { font-size: 22px; min-width: 40px; }
+    .rule-content h3 { font-size: 16px; }
+    .rule-content p { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="logo-badge">
+        <span class="dot"></span>
+        Minecraft Server
+      </div>
+      <h1>Правила сервера</h1>
+      <p class="subtitle">
+        Пожалуйста, ознакомься с правилами перед началом игры.
+        Незнание правил не освобождает от ответственности.
+      </p>
+    </header>
+
+    <main class="rules">
+      <div class="category">Общие правила</div>
+
+      <div class="rule">
+        <div class="rule-number">01</div>
+        <div class="rule-content">
+          <h3>Уважение к игрокам</h3>
+          <p>Запрещены оскорбления, унижения, травля и любое проявление токсичного поведения по отношению к другим игрокам и администрации.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-number">02</div>
+        <div class="rule-content">
+          <h3>Запрет читов</h3>
+          <p>Использование любых <strong>чит-клиентов</strong>, X-Ray, автокликеров и сторонних модов, дающих преимущество, строго запрещено.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-number">03</div>
+        <div class="rule-content">
+          <h3>Гриферство</h3>
+          <p>Разрушение чужих построек, кража ресурсов и порча территорий без разрешения владельца — <strong>бан без предупреждения</strong>.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-number">04</div>
+        <div class="rule-content">
+          <h3>Реклама</h3>
+          <p>Запрещена реклама других серверов, сторонних ресурсов и проектов в чате и на постройках.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-number">05</div>
+        <div class="rule-content">
+          <h3>Дюпы и баги</h3>
+          <p>О найденных багах и дюпах нужно сообщать администрации. Использование их в личных целях карается баном.</p>
+        </div>
+      </div>
+
+      <div class="category">Чат и общение</div>
+
+      <div class="rule">
+        <div class="rule-number">06</div>
+        <div class="rule-content">
+          <h3>Мат и флуд</h3>
+          <p>Чрезмерный мат, капс, спам и флуд в общем чате запрещены. Уважай собеседников.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-number">07</div>
+        <div class="rule-content">
+          <h3>Политика и религия</h3>
+          <p>Обсуждение политических, религиозных и острых социальных тем в общем чате запрещено.</p>
+        </div>
+      </div>
+
+      <div class="category">PvP и взаимодействие</div>
+
+      <div class="rule">
+        <div class="rule-number">08</div>
+        <div class="rule-content">
+          <h3>Честный PvP</h3>
+          <p>Запрещены тимминг в соло-режимах, гриферские ловушки на спавне и убийство новичков без причины.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-number">09</div>
+        <div class="rule-content">
+          <h3>Спавн и общественные места</h3>
+          <p>На спавне и в общественных зонах PvP, ловушки и строительство запрещены без согласования с админами.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Играя на сервере, ты автоматически соглашаешься с правилами.</p>
+      <div class="warn">Незнание правил не освобождает от ответственности</div>
+    </footer>
+  </div>
+</body>
+</html>
